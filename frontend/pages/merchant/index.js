@@ -9,9 +9,8 @@ const Merchant = () => {
 
     return (
         <div className={classes.dashboard}>
-            <div className={classes['dashboard-payments']}>Test</div>
-
-            <div className={classes['dashboard-cart']}>Test 2</div>
+            <div className={classes['dashboard-payments']}></div>
+            <div className={classes['dashboard-cart']}></div>
         </div>
     )
 }

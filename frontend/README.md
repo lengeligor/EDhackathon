@@ -51,4 +51,9 @@ Algoritmus pre vypocet urokov pre usera
 
 Fond pre nasu app(Fond pre seederov) - investicia, zaroven to vie Erste pouzit na budget pre nasu appku
 
+Points - ako odmena za pocty nakupov
+
+Pri celkovej sume ktoru musime zaplatit budu aj body za nakup
+
+Defaultne nastavena platba
 
