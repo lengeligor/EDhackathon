@@ -70,7 +70,6 @@ const Cart = () => {
             height={'100vh'}
         >
             <CartItem></CartItem>
-
             <Box>
                 <Total></Total>
                 <PayButton></PayButton>
