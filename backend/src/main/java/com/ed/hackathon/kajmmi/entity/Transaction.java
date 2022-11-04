@@ -1,23 +1,20 @@
 package com.ed.hackathon.kajmmi.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "transaction")
-@SequenceGenerator(name = "SEQ_ID" , sequenceName = "CUSTOMER_ID_SEQ", allocationSize = 1)
 public class Transaction implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ID")
+    @GeneratedValue
     @Column(unique = true , nullable = false)
     private Long id;
 
@@ -25,7 +22,7 @@ public class Transaction implements Serializable {
 
     private LocalDate updateDate;
 
-    private String interval;
+    private String paymentInterval;
 
     private LocalDate intervalDueDate;
 
@@ -43,8 +40,8 @@ public class Transaction implements Serializable {
 
     private Boolean isPaid;
 
-
-
-
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
 
 }

@@ -1,7 +1,5 @@
 package com.ed.hackathon.kajmmi.entity;
 
-
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,11 +10,10 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "customer")
-@SequenceGenerator(name = "SEQ_ID" , sequenceName = "CUSTOMER_ID_SEQ", allocationSize = 1)
 public class Customer implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "SEQ_ID")
+    @GeneratedValue
     @Column(unique = true , nullable = false)
     private Long id;
 
@@ -27,6 +24,4 @@ public class Customer implements Serializable {
     private String lastname;
 
     private Long balance;
-
-
 }
