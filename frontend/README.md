@@ -57,3 +57,5 @@ Pri celkovej sume ktoru musime zaplatit budu aj body za nakup
 
 Defaultne nastavena platba
 
+
+
