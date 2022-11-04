@@ -1,5 +1,4 @@
 import { Box, Grid } from '@chakra-ui/react'
-import styled from 'styled-components'
 import TransactionSetup from '../components/TransactionSetup'
 import Cart from '../components/Cart'
 import COLOR from '../../Theme'
@@ -13,7 +12,7 @@ const Merchant = () => {
 
     return (
         <Grid templateColumns={'5fr 3fr'}>
-            <Box height={'100vh'} w={'100%'} bg={'#050505'}>
+            <Box height={'100vh'} w={'100%'} bg={COLOR.BLACK}>
                 <TransactionSetup />
             </Box>
             <Box height={'100vh'} w={'100%'} bg={COLOR.BLACK_BRIGHTER_2}>

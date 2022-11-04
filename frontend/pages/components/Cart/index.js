@@ -1,20 +1,18 @@
 import React from 'react'
 import COLOR from '../../../Theme'
-import { Box, Center, Flex, Text, Button, Spacer } from '@chakra-ui/react'
+import { Box, Center, Flex, Text, Button } from '@chakra-ui/react'
 
-const CartItem = () => {
+const Title = () => {
     return (
-        <Flex color="white" align={'center'} mt={4}>
+        <Flex color={COLOR.TEXT_WHITE} align={'center'} mt={4}>
             <Center w="100%">
-                <Box
-                    w="90%"
-                    p="2"
-                    borderRadius={'4px'}
-                    bg={COLOR.BLACK_BRIGHTER_2}
-                >
-                    <Text fontSize={'14px'}>Coca-Cola for 1 point</Text>
-                    <Text fontSize={'10px'} color={'#A7A7A7'}>
-                        One coupon, one position for check
+                <Box w="90%" p="2">
+                    <Text
+                        align={'center'}
+                        fontSize={'14px'}
+                        color={COLOR.TEXT_WHITE}
+                    >
+                        Shopping Cart
                     </Text>
                 </Box>
             </Center>
@@ -22,7 +20,35 @@ const CartItem = () => {
     )
 }
 
-const Total = () => {
+const CartItem = ({ title, subtitle, price }) => {
+    return (
+        <Flex color={COLOR.TEXT_WHITE} align={'center'} mt={4}>
+            <Center w="100%">
+                <Box
+                    w="90%"
+                    p="2"
+                    borderRadius={'4px'}
+                    bg={COLOR.BLACK_BRIGHTER_3}
+                >
+                    <Flex justify={'space-between'} align={'center'}>
+                        <Box>
+                            <Text fontSize={'14px'}>{title}</Text>
+                            <Text
+                                fontSize={'10px'}
+                                color={COLOR.TEXT_LIGHT_GRAY}
+                            >
+                                {subtitle}
+                            </Text>
+                        </Box>
+                        <Text>{price.toFixed(2)}</Text>
+                    </Flex>
+                </Box>
+            </Center>
+        </Flex>
+    )
+}
+
+const Total = ({ value }) => {
     return (
         <Flex color="white" align={'center'} mt={4}>
             <Center w="100%">
@@ -31,13 +57,13 @@ const Total = () => {
                     p={'2'}
                     borderRadius={'4px'}
                     border={'1px'}
-                    borderColor={COLOR.LIGHT_GRAY}
-                    bg={COLOR.BLACK_BRIGHTER_2}
+                    borderColor={COLOR.TEXT_LIGHT_GRAY}
+                    bg={COLOR.BLACK_BRIGHTER_3}
                 >
-                    <Text fontSize={'10px'} color={'#A7A7A7'}>
+                    <Text fontSize={'10px'} color={COLOR.TEXT_LIGHT_GRAY}>
                         Total
                     </Text>
-                    <Text fontSize={'14px'}>200.00</Text>
+                    <Text fontSize={'14px'}>{value.toFixed(2)}</Text>
                 </Box>
             </Center>
         </Flex>
@@ -46,7 +72,7 @@ const Total = () => {
 
 const PayButton = () => {
     return (
-        <Flex color="white" align={'center'} mt={4}>
+        <Flex color="white" align={'center'} mt={4} mb={5}>
             <Center w="100%">
                 <Button
                     w={'90%'}
@@ -54,6 +80,7 @@ const PayButton = () => {
                     bg={COLOR.YELLOW}
                     color={COLOR.BLACK}
                     borderRadius={'4px'}
+                    letterSpacing={'1px'}
                 >
                     Pay
                 </Button>
@@ -69,9 +96,46 @@ const Cart = () => {
             justifyContent={'space-between'}
             height={'100vh'}
         >
-            <CartItem></CartItem>
             <Box>
-                <Total></Total>
+                <Title></Title>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={20}
+                ></CartItem>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={30}
+                ></CartItem>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={20}
+                ></CartItem>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={20}
+                ></CartItem>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={20}
+                ></CartItem>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={2}
+                ></CartItem>
+                <CartItem
+                    title={'Coca-Cola for 1 point'}
+                    subtitle={'One coupon, one position for check'}
+                    price={2}
+                ></CartItem>
+            </Box>
+            <Box>
+                <Total value={200}></Total>
                 <PayButton></PayButton>
             </Box>
         </Flex>
