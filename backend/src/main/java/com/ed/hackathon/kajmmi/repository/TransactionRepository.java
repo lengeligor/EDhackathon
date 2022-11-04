@@ -1,7 +1,7 @@
 package com.ed.hackathon.kajmmi.repository;
 
-import com.ed.hackathon.kajmmi.dto.TransactionDto;
 import com.ed.hackathon.kajmmi.dto.TransactionFilterDto;
+import com.ed.hackathon.kajmmi.entity.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository {
 
-    TransactionDto createTransaction(TransactionDto transactionDto);
+    Transaction createTransaction(Transaction transactionDto);
 
-    Page<TransactionDto> getTransactions(Pageable pageable, TransactionFilterDto filter);
+    Page<Transaction> getTransactions(Pageable pageable, TransactionFilterDto filter);
 
 }
