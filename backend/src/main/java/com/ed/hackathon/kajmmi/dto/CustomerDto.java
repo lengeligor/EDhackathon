@@ -6,8 +6,8 @@ import lombok.Data;
 public class CustomerDto {
 
     private Long id;
-    private Long number;
-    private String name;
-    private String lastname;
-    private Long balance;
+    private Long number;       //cislo karty
+    private String name;    //meno zakaznika
+    private String lastname;    //priezvisko zakaznika
+    private Long balance;   //jeho prostriedky
 }
