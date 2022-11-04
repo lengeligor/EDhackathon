@@ -1,5 +1,6 @@
 package com.ed.hackathon.kajmmi.dto;
 
+import com.ed.hackathon.kajmmi.entity.Customer;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,5 +19,5 @@ public class TransactionFilterDto {
     private Long paidOffIntervals;
     private Long payment;
     private Boolean isPaid;
-    private CustomerDto customer;
+    private Customer customer;
 }

@@ -36,7 +36,7 @@ public class Transaction implements Serializable {
 
     private Long paidOffIntervals;
 
-    private Long number;
+    private Long payment;
 
     private Boolean isPaid;
 
