@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Box, Flex, Grid, Text } from '@chakra-ui/react'
+import { Box, Flex, Grid, Input, Select, Text } from '@chakra-ui/react'
+import styled from 'styled-components'
 
 import { rem } from 'polished'
 import {
@@ -124,6 +125,8 @@ export const PAYMENT_TYPE = {
 
 const TransactionSetup = () => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
+    const [period, setPeriod] = useState()
+    const [price, setPrice] = useState()
     return (
         <Box>
             <Header />
@@ -165,7 +168,7 @@ const TransactionSetup = () => {
                     />
                 </Grid>
                 {selectedType === PAYMENT_TYPE.INTERVAL ? (
-                    <InstallementsForm />
+                    <InstallementsForm period={period} setPeriod={setPeriod} />
                 ) : (
                     <PayLater />
                 )}
@@ -174,11 +177,49 @@ const TransactionSetup = () => {
     )
 }
 
-const InstallementsForm = () => {
+const PERIODS = [
+    {
+        title: 'Daily',
+        value: 'daily'
+    },
+
+    {
+        title: 'Weekly',
+        value: 'weekly'
+    },
+    {
+        title: 'Monthly',
+        value: 'monthly'
+    }
+]
+
+const StyledSelect = styled(Select)`
+    color: white;
+`
+
+const InstallementsForm = ({ period, setPeriod, price, setPrice }) => {
     return (
-        <Flex flexDir={'column'}>
-            {/* Daily, weekly */}
-            {/* Splátka */}
+        <Flex mt={5} flexDir={'column'}>
+            <StyledSelect
+                onChange={(e) => setPeriod(e.target.value)}
+                value={period}
+                placeholder="StyledSelect Period"
+            >
+                {PERIODS.map(({ value, title }) => (
+                    <option key={value} value={value}>
+                        {title}
+                    </option>
+                ))}
+            </StyledSelect>
+            <Input
+                value={price}
+                setValue={(e) => {
+                    setPrice(e.target.value)
+                }}
+                color={'white'}
+                mt={5}
+                type="number"
+            />
             {/*jak dlho*/}
             {/*urok*/}
         </Flex>
