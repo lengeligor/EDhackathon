@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Flex, Grid, Text } from '@chakra-ui/react'
+import { Box, Flex, Grid, Select, Text } from '@chakra-ui/react'
 import styled from 'styled-components'
 import { rem } from 'polished'
 import {
@@ -144,9 +144,29 @@ const TransactionSetup = () => {
                         icon={FaAngleDoubleRight}
                     />
                 </Grid>
+                {selectedType === PAYMENT_TYPE.INTERVAL ? (
+                    <InstallementsForm />
+                ) : (
+                    <PayLater />
+                )}
             </Box>
         </Box>
     )
+}
+
+const InstallementsForm = () => {
+    return (
+        <Flex flexDir={'column'}>
+            {/* Daily, weekly */}
+            {/* Splátka */}
+            {/*jak dlho*/}
+            {/*urok*/}
+        </Flex>
+    )
+}
+
+const PayLater = () => {
+    return 'payLater'
 }
 
 export default TransactionSetup
