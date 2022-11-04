@@ -24,4 +24,6 @@ public class Customer implements Serializable {
     private String lastname;
 
     private Long balance;
+
+
 }
