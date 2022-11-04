@@ -7,9 +7,9 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.Scanner;
 
 @Component
 public class MqttSubscriberUtil implements MqttCallback {
@@ -23,10 +23,7 @@ public class MqttSubscriberUtil implements MqttCallback {
     /** The topic. */
     private static final String topic = "hackathon/kajmmi/rfid/pay";
 
-  /*  public static void main(String[] args) {
-        System.out.println("Subscriber running");
-        new MqttSubscriber().subscribe(topic);
-    }*/
+    private final Logger logger = LoggerFactory.getLogger(MqttSubscriberUtil.class);
 
     public MqttSubscriberUtil() {
         subscribe(topic);
@@ -43,20 +40,20 @@ public class MqttSubscriberUtil implements MqttCallback {
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
 
-            System.out.println("checking");
-            System.out.println("Mqtt Connecting to broker: " + brokerUrl);
+            logger.info("checking");
+            logger.info("Mqtt Connecting to broker: " + brokerUrl);
 
             sampleClient.connect(connOpts);
-            System.out.println("Mqtt Connected");
+            logger.info("Mqtt Connected");
 
             sampleClient.setCallback(this);
             sampleClient.subscribe(topic);
 
-            System.out.println("Subscribed");
-            System.out.println("Listening");
+            logger.info("Subscribed");
+            logger.info("Listening");
 
         } catch (MqttException me) {
-            System.out.println(me);
+            logger.error(me.getMessage());
         }
     }
 
