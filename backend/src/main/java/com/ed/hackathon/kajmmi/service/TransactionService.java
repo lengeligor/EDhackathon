@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +31,10 @@ public class TransactionService implements TransactionRepository {
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
+        transaction.setCreateDate(LocalDate.now());
+        transaction.setUpdateDate(LocalDate.now());
+        transaction.setIsPaid(false);
+        transaction.setPaidOffIntervals(1L);//todo 1 or 0
         entityManager.persist(transaction);
         return transaction;
     }
