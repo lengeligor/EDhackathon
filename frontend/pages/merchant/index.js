@@ -2,6 +2,7 @@ import { Box, Grid } from '@chakra-ui/react'
 import styled from 'styled-components'
 import TransactionSetup from '../components/TransactionSetup'
 import Cart from '../components/Cart'
+import COLOR from '../../Theme'
 
 const Side = styled(Box)`
     height: 100vh;
@@ -16,12 +17,12 @@ const Merchant = () => {
 
     return (
         <Grid templateColumns={'5fr 3fr'}>
-            <Side w={'100%'} bg={'blue'}>
+            <Box height={'100vh'} w={'100%'} bg={'blue'}>
                 <TransactionSetup />
-            </Side>
-            <Side w={'100%'} bg={'red'}>
+            </Box>
+            <Box height={'100vh'} w={'100%'} bg={COLOR.BLACK_BRIGHTER_1}>
                 <Cart />
-            </Side>
+            </Box>
         </Grid>
     )
 }
