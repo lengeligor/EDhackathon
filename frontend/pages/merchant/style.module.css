@@ -1,0 +1,19 @@
+.dashboard{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 70% 30%;
+    background-color: white;
+    color: black;
+}
+
+.dashboard-payments{
+    background-color: blue;
+    height: 100vh;
+    width: 100%;
+}
+
+.dashboard-cart{
+    background-color: red;
+    height: 100vh;
+    width: 100%;
+}

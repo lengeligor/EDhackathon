@@ -32,3 +32,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+Kazdy user ma svoj ucet
+
+V dashboarde obchodnika management spôsobu platenia 
+
+Platba bude najprv splatena spolocnostou
+
+Na zaklade ID karty nacitame usera z databazy na dashboarde terminalu
+
+Interface obchodnika - tablet, citacka, nastavovanie platby pre zakaznika
+
+Formular selectov moznosti platby
+
+Algoritmus pre vypocet urokov pre usera
+
+Fond pre nasu app(Fond pre seederov) - investicia, zaroven to vie Erste pouzit na budget pre nasu appku
+
+
