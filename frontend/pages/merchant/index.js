@@ -1,4 +1,11 @@
-import classes from './style.module.css'
+import { Box, Grid } from '@chakra-ui/react'
+import styled from 'styled-components'
+import TransactionSetup from '../components/TransactionSetup'
+import Cart from '../components/Cart'
+
+const Side = styled(Box)`
+    height: 100vh;
+`
 
 const Merchant = () => {
     /**
@@ -8,10 +15,14 @@ const Merchant = () => {
      */
 
     return (
-        <div className={classes.dashboard}>
-            <div className={classes['dashboard-payments']}></div>
-            <div className={classes['dashboard-cart']}></div>
-        </div>
+        <Grid templateColumns={'5fr 3fr'}>
+            <Side w={'100%'} bg={'blue'}>
+                <TransactionSetup />
+            </Side>
+            <Side w={'100%'} bg={'red'}>
+                <Cart />
+            </Side>
+        </Grid>
     )
 }
 
