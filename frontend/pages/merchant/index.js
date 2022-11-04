@@ -16,7 +16,7 @@ const Merchant = () => {
             <Box height={'100vh'} w={'100%'} bg={'#050505'}>
                 <TransactionSetup />
             </Box>
-            <Box height={'100vh'} w={'100%'} bg={'red'}>
+            <Box height={'100vh'} w={'100%'} bg={COLOR.BLACK_BRIGHTER_2}>
                 <Cart />
             </Box>
         </Grid>
