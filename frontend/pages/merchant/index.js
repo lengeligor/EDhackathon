@@ -3,10 +3,6 @@ import styled from 'styled-components'
 import TransactionSetup from '../components/TransactionSetup'
 import Cart from '../components/Cart'
 
-const Side = styled(Box)`
-    height: 100vh;
-`
-
 const Merchant = () => {
     /**
      * Sposoby platby
@@ -16,12 +12,12 @@ const Merchant = () => {
 
     return (
         <Grid templateColumns={'5fr 3fr'}>
-            <Side w={'100%'} bg={'blue'}>
+            <Box height={'100vh'} w={'100%'} bg={'#050505'}>
                 <TransactionSetup />
-            </Side>
-            <Side w={'100%'} bg={'red'}>
+            </Box>
+            <Box height={'100vh'} w={'100%'} bg={'red'}>
                 <Cart />
-            </Side>
+            </Box>
         </Grid>
     )
 }
