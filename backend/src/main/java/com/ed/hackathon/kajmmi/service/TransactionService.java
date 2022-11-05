@@ -2,6 +2,7 @@ package com.ed.hackathon.kajmmi.service;
 
 import com.ed.hackathon.kajmmi.dto.TransactionFilterDto;
 import com.ed.hackathon.kajmmi.entity.Transaction;
+import com.ed.hackathon.kajmmi.enums.IntervalEnum;
 import com.ed.hackathon.kajmmi.repository.TransactionRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,16 +24,32 @@ public class TransactionService implements TransactionRepository {
 
     private static final String MISSING_CUSTOMER_ID = "Chýba id zákazníka.";
     private static final String MISSING_CUSTOMER = "Chýba zákazník.";
+    private static final String MISSING_INTERVAL = "Chýba interval platieb.";
+    private static final String MISSING_TRANSACTION = "Transakcia je prázdna.";
+    private static final String WRONG_INTERVAL = "Nesprávny interval platieb.";
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
+        Objects.requireNonNull(transaction, MISSING_TRANSACTION);
         transaction.setCreateDate(LocalDate.now());
         transaction.setUpdateDate(LocalDate.now());
         transaction.setIsPaid(false);
-        transaction.setPaidOffIntervals(1L);//todo 1 or 0
+        transaction.setPaidOffIntervals(1L);
+        Objects.requireNonNull(transaction.getPaymentInterval(), MISSING_INTERVAL);
+        if (transaction.getPaymentInterval().equals(IntervalEnum.DAILY.value())){
+            transaction.setIntervalDueDate(LocalDate.now().plusDays(1));
+        } else if (transaction.getPaymentInterval().equals(IntervalEnum.MONTHLY.value())){
+            transaction.setIntervalDueDate(LocalDate.now().plusDays(30));
+        } else if (transaction.getPaymentInterval().equals(IntervalEnum.WEEKLY.value())){
+            transaction.setIntervalDueDate(LocalDate.now().plusDays(7));
+        } else if (transaction.getPaymentInterval().equals(IntervalEnum.ANNUMALLY.value())){
+            transaction.setIntervalDueDate(LocalDate.now().plusDays(365));
+        } else {
+            throw new RuntimeException(WRONG_INTERVAL);
+        }
         entityManager.persist(transaction);
         return transaction;
     }

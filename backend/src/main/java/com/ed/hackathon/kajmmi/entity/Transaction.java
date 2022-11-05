@@ -11,10 +11,11 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "transaction")
+@SequenceGenerator(name = "SEQ_ID", sequenceName = "TRANSACTION_ID_SEQ", allocationSize = 1)
 public class Transaction implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ID")
     @Column(unique = true , nullable = false)
     private Long id;
 
