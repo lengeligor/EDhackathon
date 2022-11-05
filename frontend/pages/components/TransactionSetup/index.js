@@ -37,7 +37,7 @@ const UserCardInfo = ({ title, value }) => {
                 {value}
             </Text>
             <Text fontSize={'12px'} color={COLOR.TEXT_LIGHT_GRAY}>
-                {title}
+                {title + 's'}
             </Text>
         </Box>
     )
