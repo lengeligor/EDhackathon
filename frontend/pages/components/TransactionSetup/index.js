@@ -213,6 +213,7 @@ const TransactionSetup = ({ total, setInterestRate, setDueDate, dueDate }) => {
                 </Grid>
                 {selectedType === PAYMENT_TYPE.INTERVAL ? (
                     <InstallementsForm
+                        setDueDate={setDueDate}
                         total={total}
                         period={period}
                         setPeriod={setPeriod}
@@ -267,9 +268,17 @@ const InstallementsForm = ({
     setPeriod,
     installment,
     setInstallment,
-    total
+    total,
+    setDueDate
 }) => {
+    const computedDate = countDueDate({ total, installment, period })
     const showResult = !!period && !!installment
+
+    useEffect(() => {
+        if (showResult) {
+            setDueDate(format(computedDate, 'yyyy-MM-dd'))
+        }
+    }, [computedDate, setDueDate, showResult])
     return (
         <Flex mt={5} flexDir={'column'}>
             <StyledSelect
@@ -287,7 +296,6 @@ const InstallementsForm = ({
                 placeholder={'Select installment'}
                 value={installment}
                 onChange={(e) => {
-                    console.log(e.target.value)
                     setInstallment(e.target.value)
                 }}
                 mt={5}
@@ -298,10 +306,7 @@ const InstallementsForm = ({
                     <Box>
                         <Text color={'white'}>due date</Text>
                         <Text color={'white'}>
-                            {format(
-                                countDueDate({ total, installment, period }),
-                                'dd-MM-yyy'
-                            )}
+                            {format(computedDate, 'dd-MM-yyy')}
                         </Text>
                     </Box>
                     <Box>
