@@ -56,7 +56,7 @@ const CartItem = ({ title, subtitle, price }) => {
                                 {subtitle}
                             </Text>
                         </Box>
-                        <Text>{price.toFixed(2)}</Text>
+                        <Text>{'$ ' + price.toFixed(2)}</Text>
                     </Flex>
                 </Box>
             </Center>
@@ -79,7 +79,7 @@ const Total = ({ value }) => {
                     <Text fontSize={'10px'} color={COLOR.TEXT_LIGHT_GRAY}>
                         Total
                     </Text>
-                    <Text fontSize={'14px'}>{value.toFixed(2)}</Text>
+                    <Text fontSize={'14px'}>{'$ ' + value.toFixed(2)}</Text>
                 </Box>
             </Center>
         </Flex>
@@ -163,24 +163,94 @@ const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
                         <Total value={totalWithInterest}></Total>
                     </>
                 )}
-                <PayButton></PayButton>
+                <PayButton onOpen={onOpen}></PayButton>
                 <p onClick={sendTransaction}>test</p>
             </Box>
-
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent bg={COLOR.YELLOW}>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <Flex align={'center'} direction={'column'}>
+                        <ModalHeader
+                            textAlign={'center'}
+                            borderBottom={'1px'}
+                            borderBottomStyle={'dashed'}
+                            borderBottomColor={'#c3b431'}
+                            borderBottomWidth={'2px'}
+                            w={'100%'}
+                            mb={'4'}
+                        >
+                            <Text>Your order</Text>
+
+                            <Text fontWeight={'bold'} fontSize={'26px'}>
+                                {'$ ' + totalWithInterest.toFixed(2)}
+                            </Text>
+                        </ModalHeader>
+                        <ModalBody w={'90%'}>
+                            <Box mb={'4'}>
+                                <Text>User</Text>
+                                <Text fontWeight={'bold'}>Matej Gerek</Text>
+                            </Box>
+                            <Box
+                                bg={'#e6d432'}
+                                borderRadius={'4px'}
+                                p={'4'}
+                                mb={'4'}
+                            >
+                                <Flex justify={'space-between'} mb={'2'}>
+                                    <Text fontSize={'16px'} color={'#57542a'}>
+                                        Total Check:
+                                    </Text>
+                                    <Text
+                                        color={COLOR.BLACK}
+                                        fontWeight={'bold'}
+                                    >
+                                        {' '}
+                                        {'$ ' + total.toFixed(2)}
+                                    </Text>
+                                </Flex>
+                                <Flex justify={'space-between'}>
+                                    <Text fontSize={'16px'} color={'#57542a'}>
+                                        Interest Rate:
+                                    </Text>
+                                    <Text
+                                        color={COLOR.BLACK}
+                                        fontWeight={'bold'}
+                                    >
+                                        {interestRate + '%'}
+                                    </Text>
+                                </Flex>
+                                <Box
+                                    my={3}
+                                    w={'100%'}
+                                    height={'1px'}
+                                    bg={'#c3b431'}
+                                />
+                                <Flex justify={'space-between'}>
+                                    <Text fontSize={'16px'} color={'#57542a'}>
+                                        Total with Interest:
+                                    </Text>
+                                    <Text
+                                        color={COLOR.BLACK}
+                                        fontWeight={'bold'}
+                                    >
+                                        {'$ ' + totalWithInterest.toFixed(2)}
+                                    </Text>
+                                </Flex>
+                            </Box>
+                        </ModalBody>
+                    </Flex>
+
                     <ModalCloseButton />
-                    <ModalBody>
-                        <Box></Box>
-                    </ModalBody>
+
                     <ModalFooter>
                         <Button
-                            bg={COLOR.BLACK_BRIGHTER_1}
+                            bg={COLOR.BLACK_BRIGHTER_3}
+                            // border={'1px'}
+                            color={COLOR.YELLOW}
+                            fontWeight={'bold'}
                             mr={3}
                             onClick={onClose}
-                            color={COLOR.TEXT_WHITE}
+                            _hover={{ bg: COLOR.BLACK_BRIGHTER_1 }}
                         >
                             Pay now
                         </Button>

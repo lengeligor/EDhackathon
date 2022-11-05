@@ -1,13 +1,41 @@
 import '../styles/globals.css'
 import { Roboto } from '@next/font/google'
-import { ChakraProvider } from '@chakra-ui/react'
-
+import { Box, ChakraProvider, Flex, Text } from '@chakra-ui/react'
+import { FaShoppingCart } from 'react-icons/fa'
 const roboto = Roboto({
     weight: '400'
 })
 
 import mqtt from 'mqtt'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import COLOR from '../Theme'
+import { rem } from 'polished'
+
+const WelcomeBox = () => {
+    return (
+        <Flex
+            align={'center'}
+            justify={'center'}
+            height={'100vh'}
+            bg={COLOR.BLACK_BRIGHTER_1}
+            color={COLOR.BLACK_BRIGHTER_1}
+        >
+            <Flex
+                bg={'#e6d432'}
+                direction={'column'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                p={12}
+                borderRadius={'4px'}
+            >
+                <Text fontSize={'40px'} fontWeight={'bold'} mb={4}>
+                    Please scan your shopping card
+                </Text>
+                <FaShoppingCart fontSize={'64px'} />
+            </Flex>
+        </Flex>
+    )
+}
 
 function MyApp({ Component, pageProps }) {
     const [cardId, setCardId] = useState()
@@ -46,7 +74,11 @@ function MyApp({ Component, pageProps }) {
     return (
         <ChakraProvider>
             <main className={roboto.className}>
-                {user ? <Component user={user} {...pageProps} /> : 'no card id'}
+                {user ? (
+                    <Component {...pageProps} />
+                ) : (
+                    <WelcomeBox></WelcomeBox>
+                )}
             </main>
         </ChakraProvider>
     )
