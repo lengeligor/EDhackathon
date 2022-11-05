@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 import { Roboto } from '@next/font/google'
-import { Box, ChakraProvider, Flex, Text } from '@chakra-ui/react'
+import { ChakraProvider, Flex, Text } from '@chakra-ui/react'
 import { FaShoppingCart } from 'react-icons/fa'
 const roboto = Roboto({
     weight: '400'
@@ -9,7 +9,6 @@ const roboto = Roboto({
 import mqtt from 'mqtt'
 import React, { useEffect, useState } from 'react'
 import COLOR from '../Theme'
-import { rem } from 'polished'
 
 const WelcomeBox = () => {
     return (
@@ -77,6 +76,7 @@ function MyApp({ Component, pageProps }) {
                 ) : (
                     <WelcomeBox></WelcomeBox>
                 )}
+                {/*<Component user={user} {...pageProps} />*/}
             </main>
         </ChakraProvider>
     )
