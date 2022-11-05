@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 
 const URL = 'http://localhost:8083/ed/api/'
 
-const Merchant = ({ user }) => {
+const Merchant = ({ user, setUser }) => {
     /**
      * Sposoby platby
      *  vyplacanie mesacne v ciastkach
@@ -25,11 +25,11 @@ const Merchant = ({ user }) => {
             totalAmount: total,
             dueDate,
             interest: interestRate,
-            totalPayments: totalWithInterest / installment,
+            totalPayments: period ? totalWithInterest / installment : 1,
             payment: installment,
-            paymentInterval: period,
+            paymentInterval: period ?? 'daily',
             customer: {
-                id: 1
+                id: user.id
             }
         }
 
@@ -66,6 +66,9 @@ const Merchant = ({ user }) => {
                     total={total}
                     interestRate={interestRate}
                     totalWithInterest={totalWithInterest}
+                    goHome={() => {
+                        setUser(null)
+                    }}
                 />
             </Box>
         </Grid>

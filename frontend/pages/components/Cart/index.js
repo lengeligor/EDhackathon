@@ -106,9 +106,14 @@ const PayButton = ({ onOpen }) => {
     )
 }
 
-const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
+const Cart = ({
+    total,
+    interestRate,
+    totalWithInterest,
+    sendTransaction,
+    goHome
+}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
     return (
         <Flex
             direction={'column'}
@@ -249,7 +254,11 @@ const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
                             color={COLOR.YELLOW}
                             fontWeight={'bold'}
                             mr={3}
-                            onClick={onClose}
+                            onClick={async () => {
+                                const response = await sendTransaction()
+                                onClose()
+                                goHome()
+                            }}
                             _hover={{ bg: COLOR.BLACK_BRIGHTER_1 }}
                         >
                             Pay now

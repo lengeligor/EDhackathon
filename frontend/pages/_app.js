@@ -73,7 +73,7 @@ function MyApp({ Component, pageProps }) {
         <ChakraProvider>
             <main className={roboto.className}>
                 {user ? (
-                    <Component user={user} {...pageProps} />
+                    <Component setUser={setUser} user={user} {...pageProps} />
                 ) : (
                     <WelcomeBox></WelcomeBox>
                 )}
