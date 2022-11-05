@@ -106,7 +106,7 @@ const PayButton = ({ onOpen }) => {
     )
 }
 
-const Cart = ({ total, interestRate, totalWithInterest }) => {
+const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return (
@@ -164,6 +164,7 @@ const Cart = ({ total, interestRate, totalWithInterest }) => {
                     </>
                 )}
                 <PayButton></PayButton>
+                <p onClick={sendTransaction}>test</p>
             </Box>
 
             <Modal isOpen={isOpen} onClose={onClose}>

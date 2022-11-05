@@ -133,15 +133,21 @@ export const PAYMENT_TYPE = {
     PAY_LATER: 'PAY_LATER'
 }
 
-const TransactionSetup = ({ total, setInterestRate, setDueDate, dueDate }) => {
+const TransactionSetup = ({
+    total,
+    setInterestRate,
+    setDueDate,
+    dueDate,
+    installment,
+    setInstallment,
+    period,
+    setPeriod
+}) => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
 
     const onDateChange = (e) => {
         setDueDate(e.target.value)
     }
-
-    const [period, setPeriod] = useState()
-    const [installment, setInstallment] = useState()
 
     useEffect(() => {
         if (selectedType === PAYMENT_TYPE.INTERVAL) {
