@@ -153,7 +153,7 @@ const TransactionSetup = ({ total, setInterestRate, setDueDate, dueDate }) => {
             setInstallment(null)
         }
         setInterestRate(null)
-    }, [selectedType, setDueDate])
+    }, [selectedType, setDueDate, setInterestRate])
 
     useEffect(() => {
         if (
