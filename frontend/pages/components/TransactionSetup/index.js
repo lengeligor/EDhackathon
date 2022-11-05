@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex, Grid, Input, Select, Text } from '@chakra-ui/react'
 import styled from 'styled-components'
 
@@ -9,6 +9,7 @@ import {
     FaAngleDoubleRight
 } from 'react-icons/fa'
 import COLOR from '../../../Theme'
+import { addDays, addMonths, addWeeks, format } from 'date-fns'
 
 const Header = () => (
     <Flex
@@ -123,10 +124,17 @@ export const PAYMENT_TYPE = {
     PAY_LATER: 'PAY_LATER'
 }
 
-const TransactionSetup = () => {
+const TransactionSetup = ({ total, interestRate, setInterestRate }) => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
     const [period, setPeriod] = useState()
-    const [price, setPrice] = useState()
+    const [installment, setInstallment] = useState()
+
+    useEffect(() => {
+        if (!!period && !!installment) {
+            setInterestRate(2)
+        }
+    }, [period, installment])
+
     return (
         <Box>
             <Header />
@@ -168,7 +176,13 @@ const TransactionSetup = () => {
                     />
                 </Grid>
                 {selectedType === PAYMENT_TYPE.INTERVAL ? (
-                    <InstallementsForm period={period} setPeriod={setPeriod} />
+                    <InstallementsForm
+                        total={total}
+                        period={period}
+                        setPeriod={setPeriod}
+                        installment={installment}
+                        setInstallment={setInstallment}
+                    />
                 ) : (
                     <PayLater />
                 )}
@@ -196,14 +210,36 @@ const PERIODS = [
 const StyledSelect = styled(Select)`
     color: white;
 `
+const StyledInput = styled(Input)`
+    color: white;
+`
 
-const InstallementsForm = ({ period, setPeriod, price, setPrice }) => {
+const countDueDate = ({ total, installment, period }) => {
+    const installmentCount = total / installment
+    const today = new Date()
+    if (period === 'weekly') {
+        return addWeeks(today, installmentCount)
+    }
+    if (period === 'daily') {
+        return addDays(today, installmentCount)
+    }
+    return addMonths(today, installmentCount)
+}
+
+const InstallementsForm = ({
+    period,
+    setPeriod,
+    installment,
+    setInstallment,
+    total
+}) => {
+    const showResult = !!period && !!installment
     return (
         <Flex mt={5} flexDir={'column'}>
             <StyledSelect
                 onChange={(e) => setPeriod(e.target.value)}
                 value={period}
-                placeholder="StyledSelect Period"
+                placeholder="Select period"
             >
                 {PERIODS.map(({ value, title }) => (
                     <option key={value} value={value}>
@@ -211,17 +247,33 @@ const InstallementsForm = ({ period, setPeriod, price, setPrice }) => {
                     </option>
                 ))}
             </StyledSelect>
-            <Input
-                value={price}
-                setValue={(e) => {
-                    setPrice(e.target.value)
+            <StyledInput
+                placeholder={'Select installment'}
+                value={installment}
+                onChange={(e) => {
+                    console.log(e.target.value)
+                    setInstallment(e.target.value)
                 }}
-                color={'white'}
                 mt={5}
                 type="number"
             />
-            {/*jak dlho*/}
-            {/*urok*/}
+            {showResult && (
+                <Grid templateColumns={'1fr 1fr'}>
+                    <Box>
+                        <Text color={'white'}>due date</Text>
+                        <Text color={'white'}>
+                            {format(
+                                countDueDate({ total, installment, period }),
+                                'dd-MM-yyy'
+                            )}
+                        </Text>
+                    </Box>
+                    <Box>
+                        <Text color={'white'}>interest rate</Text>
+                        <Text color={'white'}>2%</Text>
+                    </Box>
+                </Grid>
+            )}
         </Flex>
     )
 }

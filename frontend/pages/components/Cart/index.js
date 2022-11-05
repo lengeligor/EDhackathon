@@ -89,7 +89,7 @@ const PayButton = () => {
     )
 }
 
-const Cart = () => {
+const Cart = ({ total, interestRate, totalWithInterest }) => {
     return (
         <Flex
             direction={'column'}
@@ -135,7 +135,15 @@ const Cart = () => {
                 ></CartItem>
             </Box>
             <Box>
-                <Total value={200}></Total>
+                <Total value={total}></Total>
+                {!!interestRate && (
+                    <>
+                        <Text color={'white'}>
+                            interestRate: {interestRate}
+                        </Text>
+                        <Total value={totalWithInterest}></Total>
+                    </>
+                )}
                 <PayButton></PayButton>
             </Box>
         </Flex>
