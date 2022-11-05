@@ -133,23 +133,43 @@ export const PAYMENT_TYPE = {
     PAY_LATER: 'PAY_LATER'
 }
 
-const TransactionSetup = ({ total, interestRate, setInterestRate }) => {
+const TransactionSetup = ({ total, setInterestRate, setDueDate, dueDate }) => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
-    const [selectedDate, setSelectedDate] = useState(new Date())
 
     const onDateChange = (e) => {
-        console.log(e.target.value)
-        setSelectedDate(e.target.value)
+        setDueDate(e.target.value)
     }
 
     const [period, setPeriod] = useState()
     const [installment, setInstallment] = useState()
 
     useEffect(() => {
-        if (!!period && !!installment) {
+        if (selectedType === PAYMENT_TYPE.INTERVAL) {
+            setDueDate(null)
+        }
+
+        if (selectedType === PAYMENT_TYPE.PAY_LATER) {
+            setPeriod(null)
+            setInstallment(null)
+        }
+        setInterestRate(null)
+    }, [selectedType, setDueDate])
+
+    useEffect(() => {
+        if (
+            !!period &&
+            !!installment &&
+            selectedType === PAYMENT_TYPE.INTERVAL
+        ) {
             setInterestRate(2)
         }
-    }, [period, installment])
+    }, [period, installment, selectedType, setInterestRate])
+
+    useEffect(() => {
+        if (!!dueDate && selectedType === PAYMENT_TYPE.PAY_LATER) {
+            setInterestRate(3)
+        }
+    }, [dueDate, selectedType, setInterestRate])
 
     return (
         <Box>
@@ -200,7 +220,7 @@ const TransactionSetup = ({ total, interestRate, setInterestRate }) => {
                         setInstallment={setInstallment}
                     />
                 ) : (
-                    <PayLater setDate={onDateChange} date={selectedDate} />
+                    <PayLater setDate={onDateChange} date={dueDate} />
                 )}
             </Box>
         </Box>

@@ -14,11 +14,14 @@ const Merchant = () => {
     const [total, setTotal] = useState(200)
     const [interestRate, setInterestRate] = useState()
     const totalWithInterest = total * (1 + interestRate / 100)
+    const [dueDate, setDueDate] = useState()
 
     return (
         <Grid templateColumns={'5fr 3fr'}>
             <Box height={'100vh'} w={'100%'} bg={COLOR.BLACK}>
                 <TransactionSetup
+                    setDueDate={setDueDate}
+                    dueDate={dueDate}
                     total={total}
                     interestRate={interestRate}
                     setInterestRate={setInterestRate}
