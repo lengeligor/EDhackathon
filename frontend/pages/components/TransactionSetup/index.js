@@ -3,11 +3,10 @@ import styled from 'styled-components'
 import {
     Box,
     Flex,
-  Grid,
+    Grid,
     FormControl,
     FormLabel,
-  Select,
-    Grid,
+    Select,
     Input,
     Text
 } from '@chakra-ui/react'
