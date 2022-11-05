@@ -1,0 +1,13 @@
+Insert Into customer (id,number, name, lastname, balance) values (1,44020323,'Matovič','Igor',10);
+Insert Into customer (id,number, name, lastname, balance) values (2,392677756,'Manager','Mirek',98);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (1,'2022-10-10','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,1);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (2,'2022-10-8','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,1);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (3,'2022-10-9','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,2);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (4,'2022-10-10','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,1);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (5,'2022-6-4','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,2);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (6,'2022-9-10','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,1);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (7,'2022-11-10','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,2);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (8,'2022-7-10','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,1);
+Insert Into transaction (id,create_Date, update_Date, payment_Interval, interval_Due_Date, due_Date,interest,total_Payments,total_Amount,paid_Off_Intervals,payment,is_Paid,customer_id) values (9,'2022-1-8','2022-10-10','daily','2022-10-10','2022-10-10',5,20,200,5,10,false,2);
+
+
