@@ -1,5 +1,13 @@
 import React, { useState } from 'react'
-import { Box, Flex, Grid, Text } from '@chakra-ui/react'
+import {
+    Box,
+    Flex,
+    FormControl,
+    FormLabel,
+    Grid,
+    Input,
+    Text
+} from '@chakra-ui/react'
 
 import { rem } from 'polished'
 import {
@@ -124,6 +132,13 @@ export const PAYMENT_TYPE = {
 
 const TransactionSetup = () => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
+    const [selectedDate, setSelectedDate] = useState(new Date())
+
+    const onDateChange = (e) => {
+        console.log(e.target.value)
+        setSelectedDate(e.target.value)
+    }
+
     return (
         <Box>
             <Header />
@@ -167,7 +182,7 @@ const TransactionSetup = () => {
                 {selectedType === PAYMENT_TYPE.INTERVAL ? (
                     <InstallementsForm />
                 ) : (
-                    <PayLater />
+                    <PayLater setDate={onDateChange} date={selectedDate} />
                 )}
             </Box>
         </Box>
@@ -185,8 +200,32 @@ const InstallementsForm = () => {
     )
 }
 
-const PayLater = () => {
-    return 'payLater'
+const PayLater = ({ setDate, date }) => {
+    return (
+        <Box
+            height={rem(150)}
+            width={'50%'}
+            mt={4}
+            color={COLOR.TEXT_LIGHT_GRAY}
+            bg={COLOR.BLACK_BRIGHTER_4}
+            p={4}
+            borderRadius={4}
+        >
+            <FormControl variant="floating" id="first-name">
+                <FormLabel color={COLOR.TEXT_LIGHT_GRAY} fontSize={'14px'}>
+                    Select payment date
+                </FormLabel>
+                <Input
+                    width={'75%'}
+                    size="md"
+                    type="date"
+                    color={COLOR.TEXT_WHITE}
+                    onChange={setDate}
+                    value={date}
+                />
+            </FormControl>
+        </Box>
+    )
 }
 
 export default TransactionSetup
