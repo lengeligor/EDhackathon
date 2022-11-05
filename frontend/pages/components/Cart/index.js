@@ -1,6 +1,22 @@
 import React from 'react'
 import COLOR from '../../../Theme'
-import { Box, Center, Flex, Text, Button } from '@chakra-ui/react'
+import {
+    Box,
+    Center,
+    Flex,
+    Text,
+    Button,
+    useDisclosure
+} from '@chakra-ui/react'
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton
+} from '@chakra-ui/react'
 
 const Title = () => {
     return (
@@ -70,7 +86,7 @@ const Total = ({ value }) => {
     )
 }
 
-const PayButton = () => {
+const PayButton = ({ onOpen }) => {
     return (
         <Flex color="white" align={'center'} mt={4} mb={5}>
             <Center w="100%">
@@ -81,15 +97,18 @@ const PayButton = () => {
                     color={COLOR.BLACK}
                     borderRadius={'4px'}
                     letterSpacing={'1px'}
+                    onClick={onOpen}
                 >
-                    Pay
+                    Checkout
                 </Button>
             </Center>
         </Flex>
     )
 }
 
-const Cart = () => {
+const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
     return (
         <Flex
             direction={'column'}
@@ -135,9 +154,39 @@ const Cart = () => {
                 ></CartItem>
             </Box>
             <Box>
-                <Total value={200}></Total>
+                <Total value={total}></Total>
+                {!!interestRate && (
+                    <>
+                        <Text color={'white'}>
+                            interestRate: {interestRate}
+                        </Text>
+                        <Total value={totalWithInterest}></Total>
+                    </>
+                )}
                 <PayButton></PayButton>
+                <p onClick={sendTransaction}>test</p>
             </Box>
+
+            <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay />
+                <ModalContent bg={COLOR.YELLOW}>
+                    <ModalHeader>Modal Title</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Box></Box>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button
+                            bg={COLOR.BLACK_BRIGHTER_1}
+                            mr={3}
+                            onClick={onClose}
+                            color={COLOR.TEXT_WHITE}
+                        >
+                            Pay now
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
         </Flex>
     )
 }

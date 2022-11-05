@@ -1,6 +1,15 @@
-import React, { useState } from 'react'
-import { Box, Flex, Grid, Input, Select, Text } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import {
+    Box,
+    Flex,
+    Grid,
+    FormControl,
+    FormLabel,
+    Select,
+    Input,
+    Text
+} from '@chakra-ui/react'
 
 import { rem } from 'polished'
 import {
@@ -9,6 +18,7 @@ import {
     FaAngleDoubleRight
 } from 'react-icons/fa'
 import COLOR from '../../../Theme'
+import { addDays, addMonths, addWeeks, format } from 'date-fns'
 
 const Header = () => (
     <Flex
@@ -123,10 +133,50 @@ export const PAYMENT_TYPE = {
     PAY_LATER: 'PAY_LATER'
 }
 
-const TransactionSetup = () => {
+const TransactionSetup = ({
+    total,
+    setInterestRate,
+    setDueDate,
+    dueDate,
+    installment,
+    setInstallment,
+    period,
+    setPeriod
+}) => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
-    const [period, setPeriod] = useState()
-    const [price, setPrice] = useState()
+
+    const onDateChange = (e) => {
+        setDueDate(e.target.value)
+    }
+
+    useEffect(() => {
+        if (selectedType === PAYMENT_TYPE.INTERVAL) {
+            setDueDate(null)
+        }
+
+        if (selectedType === PAYMENT_TYPE.PAY_LATER) {
+            setPeriod(null)
+            setInstallment(null)
+        }
+        setInterestRate(null)
+    }, [selectedType, setDueDate, setInterestRate])
+
+    useEffect(() => {
+        if (
+            !!period &&
+            !!installment &&
+            selectedType === PAYMENT_TYPE.INTERVAL
+        ) {
+            setInterestRate(2)
+        }
+    }, [period, installment, selectedType, setInterestRate])
+
+    useEffect(() => {
+        if (!!dueDate && selectedType === PAYMENT_TYPE.PAY_LATER) {
+            setInterestRate(3)
+        }
+    }, [dueDate, selectedType, setInterestRate])
+
     return (
         <Box>
             <Header />
@@ -168,9 +218,16 @@ const TransactionSetup = () => {
                     />
                 </Grid>
                 {selectedType === PAYMENT_TYPE.INTERVAL ? (
-                    <InstallementsForm period={period} setPeriod={setPeriod} />
+                    <InstallementsForm
+                        setDueDate={setDueDate}
+                        total={total}
+                        period={period}
+                        setPeriod={setPeriod}
+                        installment={installment}
+                        setInstallment={setInstallment}
+                    />
                 ) : (
-                    <PayLater />
+                    <PayLater setDate={onDateChange} date={dueDate} />
                 )}
             </Box>
         </Box>
@@ -196,14 +253,44 @@ const PERIODS = [
 const StyledSelect = styled(Select)`
     color: white;
 `
+const StyledInput = styled(Input)`
+    color: white;
+`
 
-const InstallementsForm = ({ period, setPeriod, price, setPrice }) => {
+const countDueDate = ({ total, installment, period }) => {
+    const installmentCount = total / installment
+    const today = new Date()
+    if (period === 'weekly') {
+        return addWeeks(today, installmentCount)
+    }
+    if (period === 'daily') {
+        return addDays(today, installmentCount)
+    }
+    return addMonths(today, installmentCount)
+}
+
+const InstallementsForm = ({
+    period,
+    setPeriod,
+    installment,
+    setInstallment,
+    total,
+    setDueDate
+}) => {
+    const computedDate = countDueDate({ total, installment, period })
+    const showResult = !!period && !!installment
+
+    useEffect(() => {
+        if (showResult) {
+            setDueDate(format(computedDate, 'yyyy-MM-dd'))
+        }
+    }, [computedDate, setDueDate, showResult])
     return (
         <Flex mt={5} flexDir={'column'}>
             <StyledSelect
                 onChange={(e) => setPeriod(e.target.value)}
                 value={period}
-                placeholder="StyledSelect Period"
+                placeholder="Select period"
             >
                 {PERIODS.map(({ value, title }) => (
                     <option key={value} value={value}>
@@ -211,23 +298,59 @@ const InstallementsForm = ({ period, setPeriod, price, setPrice }) => {
                     </option>
                 ))}
             </StyledSelect>
-            <Input
-                value={price}
-                setValue={(e) => {
-                    setPrice(e.target.value)
+            <StyledInput
+                placeholder={'Select installment'}
+                value={installment}
+                onChange={(e) => {
+                    setInstallment(e.target.value)
                 }}
-                color={'white'}
                 mt={5}
                 type="number"
             />
-            {/*jak dlho*/}
-            {/*urok*/}
+            {showResult && (
+                <Grid templateColumns={'1fr 1fr'}>
+                    <Box>
+                        <Text color={'white'}>due date</Text>
+                        <Text color={'white'}>
+                            {format(computedDate, 'dd-MM-yyy')}
+                        </Text>
+                    </Box>
+                    <Box>
+                        <Text color={'white'}>interest rate</Text>
+                        <Text color={'white'}>2%</Text>
+                    </Box>
+                </Grid>
+            )}
         </Flex>
     )
 }
 
-const PayLater = () => {
-    return 'payLater'
+const PayLater = ({ setDate, date }) => {
+    return (
+        <Box
+            height={rem(150)}
+            width={'50%'}
+            mt={4}
+            color={COLOR.TEXT_LIGHT_GRAY}
+            bg={COLOR.BLACK_BRIGHTER_4}
+            p={4}
+            borderRadius={4}
+        >
+            <FormControl variant="floating" id="first-name">
+                <FormLabel color={COLOR.TEXT_LIGHT_GRAY} fontSize={'14px'}>
+                    Select payment date
+                </FormLabel>
+                <Input
+                    width={'75%'}
+                    size="md"
+                    type="date"
+                    color={COLOR.TEXT_WHITE}
+                    onChange={setDate}
+                    value={date}
+                />
+            </FormControl>
+        </Box>
+    )
 }
 
 export default TransactionSetup
