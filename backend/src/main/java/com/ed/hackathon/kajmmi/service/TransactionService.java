@@ -1,10 +1,8 @@
 package com.ed.hackathon.kajmmi.service;
 
-import com.ed.hackathon.kajmmi.dto.TransactionDto;
 import com.ed.hackathon.kajmmi.dto.TransactionFilterDto;
 import com.ed.hackathon.kajmmi.entity.Transaction;
 import com.ed.hackathon.kajmmi.repository.TransactionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,6 +29,10 @@ public class TransactionService implements TransactionRepository {
 
     @Override
     public Transaction createTransaction(Transaction transaction) {
+        transaction.setCreateDate(LocalDate.now());
+        transaction.setUpdateDate(LocalDate.now());
+        transaction.setIsPaid(false);
+        transaction.setPaidOffIntervals(1L);//todo 1 or 0
         entityManager.persist(transaction);
         return transaction;
     }
