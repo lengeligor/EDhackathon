@@ -46,7 +46,9 @@ const UserCardInfo = ({ title, value }) => {
     )
 }
 
-const UserCard = ({ user: { name = '', lastname = '', balance = '' } }) => (
+const UserCard = ({
+    user: { name = '', lastname = '', balance = '', ...rest } = {}
+}) => (
     <Flex
         flexDir={'column'}
         p={5}

@@ -50,7 +50,6 @@ function MyApp({ Component, pageProps }) {
         client.on('message', function (topic, message) {
             // message is Buffer
             if (!cardId) {
-                console.log(message.toString())
                 setCardId(message.toString())
             }
             //   client.end();
@@ -61,7 +60,6 @@ function MyApp({ Component, pageProps }) {
     const [user, setUser] = useState()
 
     useEffect(() => {
-        console.log(cardId + ' karta')
         if (cardId) {
             fetch(URL + 'customer/' + cardId)
                 .then((r) => r.json())
@@ -75,7 +73,7 @@ function MyApp({ Component, pageProps }) {
         <ChakraProvider>
             <main className={roboto.className}>
                 {user ? (
-                    <Component {...pageProps} />
+                    <Component user={user} {...pageProps} />
                 ) : (
                     <WelcomeBox></WelcomeBox>
                 )}
