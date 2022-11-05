@@ -18,6 +18,6 @@ public class CalculateService {
 
     public Long getActiveTransaction(Long customerId) {
         Objects.requireNonNull(customerId, MISSING_CUSTOMER_ID);
-        return (Long) entityManager.createQuery("select count(c) from Transaction c where c.customer.id=:g").setParameter("g",customerId).getSingleResult();
+        return Long.valueOf(entityManager.createQuery("select c from Transaction c where c.customer.id=:g").setParameter("g",customerId).getResultList().size());
     }
 }
