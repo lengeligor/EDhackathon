@@ -25,5 +25,7 @@ public class Customer implements Serializable {
 
     private Long balance;
 
+    private Long countOfActiveTransactions;
+
 
 }
