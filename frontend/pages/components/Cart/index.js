@@ -86,6 +86,20 @@ const Total = ({ value }) => {
     )
 }
 
+const InterestRate = ({ value }) => {
+    return (
+        <Flex color="white" align={'center'} mt={4}>
+            <Center w="100%">
+                <Box w="90%" borderColor={COLOR.TEXT_LIGHT_GRAY}>
+                    <Text fontSize={'14px'} color={COLOR.TEXT_WHITE}>
+                        {'Interest rate: ' + value + '%'}
+                    </Text>
+                </Box>
+            </Center>
+        </Flex>
+    )
+}
+
 const PayButton = ({ onOpen }) => {
     return (
         <Flex color="white" align={'center'} mt={4} mb={5}>
@@ -118,48 +132,41 @@ const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
             <Box>
                 <Title></Title>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Wooden Box'}
                     subtitle={'One coupon, one position for check'}
-                    price={20}
+                    price={70}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'bread'}
                     subtitle={'One coupon, one position for check'}
-                    price={30}
+                    price={2.5}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Chicken breasts'}
                     subtitle={'One coupon, one position for check'}
-                    price={20}
+                    price={7}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
-                    subtitle={'One coupon, one position for check'}
-                    price={20}
-                ></CartItem>
-                <CartItem
-                    title={'Coca-Cola for 1 point'}
-                    subtitle={'One coupon, one position for check'}
-                    price={20}
-                ></CartItem>
-                <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Coca-Cola 1,5l'}
                     subtitle={'One coupon, one position for check'}
                     price={2}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Headphones'}
                     subtitle={'One coupon, one position for check'}
-                    price={2}
+                    price={28.5}
+                ></CartItem>
+                <CartItem
+                    title={'Wooden desk'}
+                    subtitle={'One coupon, one position for check'}
+                    price={90}
                 ></CartItem>
             </Box>
             <Box>
                 <Total value={total}></Total>
                 {!!interestRate && (
                     <>
-                        <Text color={'white'}>
-                            interestRate: {interestRate}
-                        </Text>
+                        <InterestRate value={interestRate}></InterestRate>
                         <Total value={totalWithInterest}></Total>
                     </>
                 )}
@@ -188,7 +195,7 @@ const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
                         <ModalBody w={'90%'}>
                             <Box mb={'4'}>
                                 <Text>User</Text>
-                                <Text fontWeight={'bold'}>Matej Gerek</Text>
+                                <Text fontWeight={'bold'}>{'USERNAME'}</Text>
                             </Box>
                             <Box
                                 bg={'#e6d432'}
