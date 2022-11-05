@@ -21,16 +21,32 @@ function MyApp({ Component, pageProps }) {
 
         client.on('message', function (topic, message) {
             // message is Buffer
-            setCardId(message.toString())
-            console.log(message.toString())
+            if (!cardId) {
+                console.log(message.toString())
+                setCardId(message.toString())
+            }
             //   client.end();
         })
     }, [])
 
+    const URL = 'http://localhost:8083/ed/api/'
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        console.log(cardId + ' karta')
+        if (cardId) {
+            fetch(URL + 'customer/' + cardId)
+                .then((r) => r.json())
+                .then((user) => {
+                    setUser(user)
+                })
+        }
+    }, [cardId])
+
     return (
         <ChakraProvider>
             <main className={roboto.className}>
-                {cardId ? <Component {...pageProps} /> : 'no card id'}
+                {user ? <Component user={user} {...pageProps} /> : 'no card id'}
             </main>
         </ChakraProvider>
     )

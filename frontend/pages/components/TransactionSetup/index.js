@@ -46,7 +46,7 @@ const UserCardInfo = ({ title, value }) => {
     )
 }
 
-const UserCard = () => (
+const UserCard = ({ user: { name = '', lastname = '', balance = '' } }) => (
     <Flex
         flexDir={'column'}
         p={5}
@@ -60,7 +60,7 @@ const UserCard = () => (
                 color={COLOR.TEXT_WHITE}
                 fontSize={'36px'}
             >
-                Matej Gerek
+                {name} {lastname}
             </Text>
             <Text color={COLOR.TEXT_LIGHT_GRAY} fontSize={'12px'}>
                 Svidník, Slovakia
@@ -68,7 +68,7 @@ const UserCard = () => (
         </Box>
         <Box my={5} w={'100%'} height={'1px'} bg={COLOR.GRAY} />
         <Grid mt={2} templateColumns={'1fr 1fr 1fr'}>
-            <UserCardInfo title={'balance'} value={'34 ETH'} />
+            <UserCardInfo title={'balance'} value={balance + ' ETH'} />
             <UserCardInfo title={'current loans'} value={13} />
             <UserCardInfo title={'something'} value={3} />
         </Grid>
@@ -141,7 +141,8 @@ const TransactionSetup = ({
     installment,
     setInstallment,
     period,
-    setPeriod
+    setPeriod,
+    user
 }) => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
 
@@ -186,7 +187,7 @@ const TransactionSetup = ({
                     templateColumns={'2fr 1fr 1fr'}
                     columnGap={5}
                 >
-                    <UserCard />
+                    <UserCard user={user} />
                     <ActionCard title={'Cancel visit'} icon={FaUserTimes} />
                     <ActionCard title={'Call help'} icon={FaQuestionCircle} />
                 </Grid>
