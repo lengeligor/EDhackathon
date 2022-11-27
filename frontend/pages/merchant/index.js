@@ -2,11 +2,11 @@ import { Box, Grid } from '@chakra-ui/react'
 import TransactionSetup from '../components/TransactionSetup'
 import Cart from '../components/Cart'
 import COLOR from '../../Theme'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const URL = 'http://localhost:8083/ed/api/'
 
-const Merchant = () => {
+const Merchant = ({ user, setUser }) => {
     /**
      * Sposoby platby
      *  vyplacanie mesacne v ciastkach
@@ -25,10 +25,11 @@ const Merchant = () => {
             totalAmount: total,
             dueDate,
             interest: interestRate,
-            totalPayments: totalWithInterest / installment,
+            totalPayments: period ? totalWithInterest / installment : 1,
             payment: installment,
+            paymentInterval: period ?? 'daily',
             customer: {
-                id: 1
+                id: user.id
             }
         }
 
@@ -56,6 +57,7 @@ const Merchant = () => {
                     setInstallment={setInstallment}
                     setPeriod={setPeriod}
                     period={period}
+                    user={user}
                 />
             </Box>
             <Box height={'100vh'} w={'100%'} bg={COLOR.BLACK_BRIGHTER_2}>
@@ -64,6 +66,9 @@ const Merchant = () => {
                     total={total}
                     interestRate={interestRate}
                     totalWithInterest={totalWithInterest}
+                    goHome={() => {
+                        setUser(null)
+                    }}
                 />
             </Box>
         </Grid>

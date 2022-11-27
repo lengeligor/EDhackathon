@@ -56,7 +56,7 @@ const CartItem = ({ title, subtitle, price }) => {
                                 {subtitle}
                             </Text>
                         </Box>
-                        <Text>{price.toFixed(2)}</Text>
+                        <Text>{'$ ' + price.toFixed(2)}</Text>
                     </Flex>
                 </Box>
             </Center>
@@ -79,7 +79,21 @@ const Total = ({ value }) => {
                     <Text fontSize={'10px'} color={COLOR.TEXT_LIGHT_GRAY}>
                         Total
                     </Text>
-                    <Text fontSize={'14px'}>{value.toFixed(2)}</Text>
+                    <Text fontSize={'14px'}>{'$ ' + value.toFixed(2)}</Text>
+                </Box>
+            </Center>
+        </Flex>
+    )
+}
+
+const InterestRate = ({ value }) => {
+    return (
+        <Flex color="white" align={'center'} mt={4}>
+            <Center w="100%">
+                <Box w="90%" borderColor={COLOR.TEXT_LIGHT_GRAY}>
+                    <Text fontSize={'14px'} color={COLOR.TEXT_WHITE}>
+                        {'Interest rate: ' + value + '%'}
+                    </Text>
                 </Box>
             </Center>
         </Flex>
@@ -106,9 +120,14 @@ const PayButton = ({ onOpen }) => {
     )
 }
 
-const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
+const Cart = ({
+    total,
+    interestRate,
+    totalWithInterest,
+    sendTransaction,
+    goHome
+}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-
     return (
         <Flex
             direction={'column'}
@@ -118,69 +137,136 @@ const Cart = ({ total, interestRate, totalWithInterest, sendTransaction }) => {
             <Box>
                 <Title></Title>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Wooden Box'}
                     subtitle={'One coupon, one position for check'}
-                    price={20}
+                    price={70}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'bread'}
                     subtitle={'One coupon, one position for check'}
-                    price={30}
+                    price={2.5}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Chicken breasts'}
                     subtitle={'One coupon, one position for check'}
-                    price={20}
+                    price={7}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
-                    subtitle={'One coupon, one position for check'}
-                    price={20}
-                ></CartItem>
-                <CartItem
-                    title={'Coca-Cola for 1 point'}
-                    subtitle={'One coupon, one position for check'}
-                    price={20}
-                ></CartItem>
-                <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Coca-Cola 1,5l'}
                     subtitle={'One coupon, one position for check'}
                     price={2}
                 ></CartItem>
                 <CartItem
-                    title={'Coca-Cola for 1 point'}
+                    title={'Headphones'}
                     subtitle={'One coupon, one position for check'}
-                    price={2}
+                    price={28.5}
+                ></CartItem>
+                <CartItem
+                    title={'Wooden desk'}
+                    subtitle={'One coupon, one position for check'}
+                    price={90}
                 ></CartItem>
             </Box>
             <Box>
                 <Total value={total}></Total>
                 {!!interestRate && (
                     <>
-                        <Text color={'white'}>
-                            interestRate: {interestRate}
-                        </Text>
+                        <InterestRate value={interestRate}></InterestRate>
                         <Total value={totalWithInterest}></Total>
                     </>
                 )}
-                <PayButton></PayButton>
+                <PayButton onOpen={onOpen}></PayButton>
                 <p onClick={sendTransaction}>test</p>
             </Box>
-
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent bg={COLOR.YELLOW}>
-                    <ModalHeader>Modal Title</ModalHeader>
+                    <Flex align={'center'} direction={'column'}>
+                        <ModalHeader
+                            textAlign={'center'}
+                            borderBottom={'1px'}
+                            borderBottomStyle={'dashed'}
+                            borderBottomColor={'#c3b431'}
+                            borderBottomWidth={'2px'}
+                            w={'100%'}
+                            mb={'4'}
+                        >
+                            <Text>Your order</Text>
+
+                            <Text fontWeight={'bold'} fontSize={'26px'}>
+                                {'$ ' + totalWithInterest.toFixed(2)}
+                            </Text>
+                        </ModalHeader>
+                        <ModalBody w={'90%'}>
+                            <Box mb={'4'}>
+                                <Text>User</Text>
+                                <Text fontWeight={'bold'}>{'USERNAME'}</Text>
+                            </Box>
+                            <Box
+                                bg={'#e6d432'}
+                                borderRadius={'4px'}
+                                p={'4'}
+                                mb={'4'}
+                            >
+                                <Flex justify={'space-between'} mb={'2'}>
+                                    <Text fontSize={'16px'} color={'#57542a'}>
+                                        Total Check:
+                                    </Text>
+                                    <Text
+                                        color={COLOR.BLACK}
+                                        fontWeight={'bold'}
+                                    >
+                                        {' '}
+                                        {'$ ' + total.toFixed(2)}
+                                    </Text>
+                                </Flex>
+                                <Flex justify={'space-between'}>
+                                    <Text fontSize={'16px'} color={'#57542a'}>
+                                        Interest Rate:
+                                    </Text>
+                                    <Text
+                                        color={COLOR.BLACK}
+                                        fontWeight={'bold'}
+                                    >
+                                        {interestRate + '%'}
+                                    </Text>
+                                </Flex>
+                                <Box
+                                    my={3}
+                                    w={'100%'}
+                                    height={'1px'}
+                                    bg={'#c3b431'}
+                                />
+                                <Flex justify={'space-between'}>
+                                    <Text fontSize={'16px'} color={'#57542a'}>
+                                        Total with Interest:
+                                    </Text>
+                                    <Text
+                                        color={COLOR.BLACK}
+                                        fontWeight={'bold'}
+                                    >
+                                        {'$ ' + totalWithInterest.toFixed(2)}
+                                    </Text>
+                                </Flex>
+                            </Box>
+                        </ModalBody>
+                    </Flex>
+
                     <ModalCloseButton />
-                    <ModalBody>
-                        <Box></Box>
-                    </ModalBody>
+
                     <ModalFooter>
                         <Button
-                            bg={COLOR.BLACK_BRIGHTER_1}
+                            bg={COLOR.BLACK_BRIGHTER_3}
+                            // border={'1px'}
+                            color={COLOR.YELLOW}
+                            fontWeight={'bold'}
                             mr={3}
-                            onClick={onClose}
-                            color={COLOR.TEXT_WHITE}
+                            onClick={async () => {
+                                const response = await sendTransaction()
+                                onClose()
+                                goHome()
+                            }}
+                            _hover={{ bg: COLOR.BLACK_BRIGHTER_1 }}
                         >
                             Pay now
                         </Button>

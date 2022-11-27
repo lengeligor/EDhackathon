@@ -4,7 +4,6 @@ import {
     Box,
     Flex,
     Grid,
-    FormControl,
     FormLabel,
     Select,
     Input,
@@ -46,7 +45,9 @@ const UserCardInfo = ({ title, value }) => {
     )
 }
 
-const UserCard = () => (
+const UserCard = ({
+    user: { name = '', lastname = '', balance = '', ...rest } = {}
+}) => (
     <Flex
         flexDir={'column'}
         p={5}
@@ -60,7 +61,7 @@ const UserCard = () => (
                 color={COLOR.TEXT_WHITE}
                 fontSize={'36px'}
             >
-                Matej Gerek
+                {name} {lastname}
             </Text>
             <Text color={COLOR.TEXT_LIGHT_GRAY} fontSize={'12px'}>
                 Svidník, Slovakia
@@ -68,7 +69,7 @@ const UserCard = () => (
         </Box>
         <Box my={5} w={'100%'} height={'1px'} bg={COLOR.GRAY} />
         <Grid mt={2} templateColumns={'1fr 1fr 1fr'}>
-            <UserCardInfo title={'balance'} value={'34 ETH'} />
+            <UserCardInfo title={'balance'} value={balance + ' ETH'} />
             <UserCardInfo title={'current loans'} value={13} />
             <UserCardInfo title={'something'} value={3} />
         </Grid>
@@ -141,7 +142,8 @@ const TransactionSetup = ({
     installment,
     setInstallment,
     period,
-    setPeriod
+    setPeriod,
+    user
 }) => {
     const [selectedType, setSelectedType] = useState(PAYMENT_TYPE.INTERVAL)
 
@@ -186,7 +188,7 @@ const TransactionSetup = ({
                     templateColumns={'2fr 1fr 1fr'}
                     columnGap={5}
                 >
-                    <UserCard />
+                    <UserCard user={user} />
                     <ActionCard title={'Cancel visit'} icon={FaUserTimes} />
                     <ActionCard title={'Call help'} icon={FaQuestionCircle} />
                 </Grid>
@@ -286,42 +288,93 @@ const InstallementsForm = ({
         }
     }, [computedDate, setDueDate, showResult])
     return (
-        <Flex mt={5} flexDir={'column'}>
-            <StyledSelect
-                onChange={(e) => setPeriod(e.target.value)}
-                value={period}
-                placeholder="Select period"
+        <Box
+            height={rem(265.4)}
+            width={'100%'}
+            mt={4}
+            color={COLOR.TEXT_LIGHT_GRAY}
+            bg={COLOR.BLACK_BRIGHTER_4}
+            p={4}
+            borderRadius={4}
+        >
+            <Flex
+                flexDir={'row'}
+                justify={'space-between'}
+                alignItems={'center'}
+                height={'75%'}
             >
-                {PERIODS.map(({ value, title }) => (
-                    <option key={value} value={value}>
-                        {title}
-                    </option>
-                ))}
-            </StyledSelect>
-            <StyledInput
-                placeholder={'Select installment'}
-                value={installment}
-                onChange={(e) => {
-                    setInstallment(e.target.value)
-                }}
-                mt={5}
-                type="number"
-            />
-            {showResult && (
-                <Grid templateColumns={'1fr 1fr'}>
-                    <Box>
-                        <Text color={'white'}>due date</Text>
-                        <Text color={'white'}>
-                            {format(computedDate, 'dd-MM-yyy')}
-                        </Text>
-                    </Box>
-                    <Box>
-                        <Text color={'white'}>interest rate</Text>
-                        <Text color={'white'}>2%</Text>
-                    </Box>
-                </Grid>
-            )}
-        </Flex>
+                <Flex direction={'column'} w={'45%'}>
+                    <StyledSelect
+                        style={{
+                            backgroundColor: '#404040',
+                            color: COLOR.TEXT_WHITE
+                        }}
+                        onChange={(e) => setPeriod(e.target.value)}
+                        value={period}
+                        placeholder="Select period"
+                    >
+                        {PERIODS.map(({ value, title }) => (
+                            <option
+                                style={{
+                                    backgroundColor: '#404040',
+                                    color: COLOR.TEXT_WHITE
+                                }}
+                                key={value}
+                                value={value}
+                                background
+                            >
+                                {title}
+                            </option>
+                        ))}
+                    </StyledSelect>
+                    <StyledInput
+                        placeholder={'Select installment'}
+                        value={installment}
+                        onChange={(e) => {
+                            setInstallment(e.target.value)
+                        }}
+                        mt={5}
+                        type="number"
+                        color={COLOR.TEXT_WHITE}
+                    />
+                </Flex>
+                {showResult && (
+                    <Flex
+                        direction={'column'}
+                        w={'45%'}
+                        height={'58%'}
+                        justify={'space-between'}
+                    >
+                        <Flex
+                            w={'100%'}
+                            direction={'row'}
+                            bg={COLOR.BLACK_BRIGHTER_1}
+                            p={2}
+                            borderRadius={'4px'}
+                        >
+                            <Text color={'white'} mr={4}>
+                                Due date:
+                            </Text>
+                            <Text color={'white'}>
+                                {format(computedDate, 'dd-MM-yyy')}
+                            </Text>
+                        </Flex>
+                        <Flex
+                            w={'100%'}
+                            direction={'row'}
+                            bg={COLOR.BLACK_BRIGHTER_1}
+                            p={2}
+                            borderRadius={'4px'}
+                        >
+                            <Text color={'white'} mr={4}>
+                                Interest rate:{' '}
+                            </Text>
+                            <Text color={'white'}>2%</Text>
+                        </Flex>
+                    </Flex>
+                )}
+            </Flex>
+        </Box>
     )
 }
 
@@ -329,14 +382,14 @@ const PayLater = ({ setDate, date }) => {
     return (
         <Box
             height={rem(150)}
-            width={'50%'}
+            width={'100%'}
             mt={4}
             color={COLOR.TEXT_LIGHT_GRAY}
             bg={COLOR.BLACK_BRIGHTER_4}
             p={4}
             borderRadius={4}
         >
-            <FormControl variant="floating" id="first-name">
+            <Box>
                 <FormLabel color={COLOR.TEXT_LIGHT_GRAY} fontSize={'14px'}>
                     Select payment date
                 </FormLabel>
@@ -348,7 +401,7 @@ const PayLater = ({ setDate, date }) => {
                     onChange={setDate}
                     value={date}
                 />
-            </FormControl>
+            </Box>
         </Box>
     )
 }
