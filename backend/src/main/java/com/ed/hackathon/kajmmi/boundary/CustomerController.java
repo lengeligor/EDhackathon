@@ -13,7 +13,7 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public Customer getCustomerId(@PathVariable Long id){return customerRepository.getCustomerId(id);
     }
 

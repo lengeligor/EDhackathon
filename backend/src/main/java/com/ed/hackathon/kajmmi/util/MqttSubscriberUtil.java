@@ -40,17 +40,17 @@ public class MqttSubscriberUtil implements MqttCallback {
             MqttConnectOptions connOpts = new MqttConnectOptions();
             connOpts.setCleanSession(true);
 
-            logger.info("checking");
-            logger.info("Mqtt Connecting to broker: " + brokerUrl);
+            logger.debug("checking");
+            logger.debug("Mqtt Connecting to broker: " + brokerUrl);
 
             sampleClient.connect(connOpts);
-            logger.info("Mqtt Connected");
+            logger.debug("Mqtt Connected");
 
             sampleClient.setCallback(this);
             sampleClient.subscribe(topic);
 
-            logger.info("Subscribed");
-            logger.info("Listening");
+            logger.debug("Subscribed");
+            logger.debug("Listening");
 
         } catch (MqttException me) {
             logger.error(me.getMessage());
@@ -69,9 +69,9 @@ public class MqttSubscriberUtil implements MqttCallback {
 
     public void messageArrived(String topic, MqttMessage message) throws Exception {
 
-        System.out.println("| Topic:" + topic);
-        System.out.println("| Message: " +message.toString());
-        System.out.println("-------------------------------------------------");
+        logger.debug("| Topic:" + topic);
+        logger.debug("| Message: " +message.toString());
+        logger.debug("-------------------------------------------------");
 
     }
 
