@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  nodered:
+    image: nodered/node-red
+    ports:
+      - 1880:1880
+    volumes:
+      - ./nodered/:/data/
+  frontend:
+    image: edhackathon-frontend
+    build: ./frontend
+    ports:
+      - 3000:3000
