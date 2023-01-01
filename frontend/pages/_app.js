@@ -44,12 +44,16 @@ function MyApp({ Component, pageProps }) {
 
         client.on('connect', function () {
             client.subscribe('hackathon/kajmmi/rfid/pay')
+            client.subscribe('hackathon/kajmmi/eth-price')
         })
 
         client.on('message', function (topic, message) {
-            // message is Buffer
-            if (!cardId) {
+            if (topic === 'hackathon/kajmmi/rfid/pay') {
                 setCardId(message.toString())
+            }
+            if (topic === 'hackathon/kajmmi/eth-price') {
+                // add set state
+                console.log(message.toString())
             }
             //   client.end();
         })
@@ -59,7 +63,7 @@ function MyApp({ Component, pageProps }) {
     const [user, setUser] = useState()
 
     useEffect(() => {
-        if (cardId) {
+        if (false) {
             fetch(URL + 'customer/' + cardId)
                 .then((r) => r.json())
                 .then((user) => {
