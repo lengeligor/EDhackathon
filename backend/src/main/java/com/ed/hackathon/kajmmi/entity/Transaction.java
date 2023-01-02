@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "transaction")
+@Table(name = "Transaction")
 @SequenceGenerator(name = "SEQ_ID", sequenceName = "TRANSACTION_ID_SEQ", allocationSize = 1)
 public class Transaction implements Serializable {
 

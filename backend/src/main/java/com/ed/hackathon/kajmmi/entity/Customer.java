@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Entity
-@Table(name = "customer")
+@Table(name = "Customer")
 public class Customer implements Serializable {
 
     @Id
