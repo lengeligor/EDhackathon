@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin
+@CrossOrigin("*")
 @RequestMapping(value = "/transaction")
 public class TransactionController {
 
@@ -28,7 +28,6 @@ public class TransactionController {
     public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction){
         return ResponseEntity.ok(transactionService.createTransaction(transaction));
     }
-
     @PostMapping("/list")
     public ResponseEntity<Page<Transaction>> getTransactions(Pageable page, @RequestBody TransactionFilterDto filter){
         return ResponseEntity.ok(transactionService.getTransactions(page, filter));
